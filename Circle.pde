@@ -79,6 +79,7 @@ class Circle {
     if (passedTime > totalTime) {
       println( " 10 seconds have passed! " );
       this.active = false;
+      println("What is this? " + this);
       savedTime = millis(); // Save the current time to restart the timer!
     }
   }
