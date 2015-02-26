@@ -10,7 +10,11 @@ import netP5.*;
 
 NetworkClient mClient;
 float mBackgroundColor;
-Circle[] myCircles = new Circle[4];
+//Old array
+//Circle[] myCircles = new Circle[4];
+
+//Let's try an ArrayList
+ArrayList myCircles;
 
 boolean haveibeenclicked = false;
 
@@ -25,10 +29,12 @@ void setup() {
   frameRate(25);
   smooth();
 
-  myCircles[0] = new Circle("melina", color(0, 64)); 
-  myCircles[1] = new Circle("andreas", color(0, 64)); 
-  myCircles[2] = new Circle("sergey", color(0, 0, 255, 64)); 
-  myCircles[3] = new Circle("john", color(255, 0, 0, 64)); 
+//  myCircles[0] = new Circle("melina", color(0, 64)); 
+//  myCircles[1] = new Circle("andreas", color(0, 64)); 
+//  myCircles[2] = new Circle("sergey", color(0, 0, 255, 64)); 
+//  myCircles[3] = new Circle("john", color(255, 0, 0, 64)); 
+
+myCircles = new ArrayList();
 
   //  stroke(0, 50);
   background(255);
@@ -36,7 +42,7 @@ void setup() {
   mClient = new NetworkClient(this, "edc.local", "client");
 }
 void draw() {
-// this is a change
+
   for (int i = 0; i < myCircles.length; i++) {
     if (myCircles[i].mouseXmoved != 0 && myCircles[i].active == true ) {
 
@@ -50,8 +56,6 @@ void draw() {
       }
 
       myCircles[i].move();
-      //    myCircles[i].move(myCircles[i].mouseXmoved, myCircles[i].mouseYmoved);
-
       myCircles[i].display();
     }
   }
