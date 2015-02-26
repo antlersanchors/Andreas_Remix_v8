@@ -42,9 +42,12 @@ class Circle {
   PVector velocity;
   PVector acceleration;
   float topspeed;
+  float velScale = 0.15;
 
   float distanceFromCenter;
   int scaleFactor;
+  
+  
 
   PVector canvasCenter = new PVector(width/2, height/2);
 
@@ -81,12 +84,19 @@ class Circle {
   //  void move(float towardsX, float towardsY) {
   void move() {
 
+    //Don't think we need this
+    //location.add(velocity);
+
     // calculate new points
     for (int i=0; i<formResolution; i++) {
       x[i] += random(-stepSize, stepSize);
       y[i] += random(-stepSize, stepSize);
-
-      // Descending movement
+      
+      //Apply velocity
+      centerX += (velScale * velocity.x);
+      centerY += (velScale * velocity.y);
+      
+      // Descending movement randomizer
       centerY += i*0.01*noise(0, 0.3);
     }
   }
