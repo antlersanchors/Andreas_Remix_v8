@@ -45,7 +45,7 @@ void draw() {
 
   for (int i = 0; i < myCircles.size(); i++) {
     Circle c = (Circle) myCircles.get(i);
-    if (c.mouseXmoved != 0 && c.active == true ) {
+    if (c.active == true ) {
 
       // Calculate how much time has passed
       passedTime = millis() - savedTime;
@@ -64,14 +64,14 @@ void draw() {
 
 
 void mousePressed() {
-//  Circle myNewCircle = new Circle("melina", color(0, 64));
-//  myCircles = append(myCircles, myNewCircle);
-  
+
   
   myCircles.add(new Circle("client", color(0, 64)));
-  
+  println("alive");
   int myCirclesSize = myCircles.size();
-  Circle targetC = (Circle) myCircles.get(myCirclesSize);
+  println("we have "+myCirclesSize);
+  Circle targetC = (Circle) myCircles.get(myCirclesSize-1);
+  
   targetC.centerX = mouseX;
   targetC.centerY = mouseY;
 
