@@ -32,7 +32,7 @@ PVector center;
 
 
 void setup() {
-  size(displayWidth, displayHeight);
+  size(displayWidth, displayHeight, P3D);
   frameRate(25);
   smooth();
 
@@ -45,7 +45,8 @@ void setup() {
 }
 
 void draw() {
-
+  fill(250,1);
+rect(0,0,width,height);
   for (int i = 0; i < myCircles.size (); i++) {
     Circle c = (Circle) myCircles.get(i);
     if (c.active == true ) {
@@ -55,6 +56,12 @@ void draw() {
       c.display();
     }
   }
+  
+float fov = PI/3.0; 
+    float cameraZ = (height/2.0) / tan(fov/2.0); 
+    perspective(fov, float(width)/float(height), cameraZ/2.0, cameraZ*2.0);
+    
+    cameraZ++;
 }
 
 void mousePressed() {
