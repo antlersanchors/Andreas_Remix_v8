@@ -56,8 +56,8 @@ void draw() {
         savedTime = millis(); // Save the current time to restart the timer!
       }
 
-      myCircles[i].move();
-      myCircles[i].display();
+      c.move();
+      c.display();
     }
   }
 }
@@ -67,14 +67,18 @@ void mousePressed() {
 //  Circle myNewCircle = new Circle("melina", color(0, 64));
 //  myCircles = append(myCircles, myNewCircle);
   
-  myCircles.add(new Circle());
-  myCircles.this.centerX = mouseX;
-  myCircles.this.centerY = mouseY;
+  
+  myCircles.add(new Circle("melina", color(0, 64)));
+  
+  int myCirclesSize = myCircles.size();
+  Circle targetC = (Circle) myCircles.get(myCirclesSize);
+  targetC.centerX = mouseX;
+  targetC.centerY = mouseY;
 
-  myCircles[2].newStroke();
+  targetC.newStroke();
 
-  myCircles[2].active = true;
-//  haveibeenclicked = true;
+  targetC.active = true;
+  
   savedTime = millis();
 }
 
@@ -98,7 +102,7 @@ void receive(String name, String tag, float x) {
 
 void receive(String name, String tag, float x, float y) {
   println("### received: " + name + " - " + tag + " - " + x + ", " + y);
-  for (int i = 0; i < myCircles.length; i++) {
+  for (int i = 0; i < myCircles.size(); i++) {
     if (name.equals("client") && tag.equals(myCircles[i].name)) {
       myCircles[i].mouseXmoved = x;
       myCircles[i].mouseYmoved = y;
