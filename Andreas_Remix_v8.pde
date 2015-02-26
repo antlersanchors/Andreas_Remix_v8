@@ -29,12 +29,12 @@ void setup() {
   frameRate(25);
   smooth();
 
-//  myCircles[0] = new Circle("melina", color(0, 64)); 
-//  myCircles[1] = new Circle("andreas", color(0, 64)); 
-//  myCircles[2] = new Circle("sergey", color(0, 0, 255, 64)); 
-//  myCircles[3] = new Circle("john", color(255, 0, 0, 64)); 
+  //  myCircles[0] = new Circle("melina", color(0, 64)); 
+  //  myCircles[1] = new Circle("andreas", color(0, 64)); 
+  //  myCircles[2] = new Circle("sergey", color(0, 0, 255, 64)); 
+  //  myCircles[3] = new Circle("john", color(255, 0, 0, 64)); 
 
-myCircles = new ArrayList();
+  myCircles = new ArrayList();
 
   //  stroke(0, 50);
   background(255);
@@ -43,42 +43,33 @@ myCircles = new ArrayList();
 }
 void draw() {
 
-  for (int i = 0; i < myCircles.size(); i++) {
+  for (int i = 0; i < myCircles.size (); i++) {
     Circle c = (Circle) myCircles.get(i);
     if (c.active == true ) {
 
-      // Calculate how much time has passed
-      passedTime = millis() - savedTime;
-      // Has ten seconds passed?
-      if (passedTime > totalTime) {
-        println( " 10 seconds have passed! " );
-        c.active = false;
-        savedTime = millis(); // Save the current time to restart the timer!
-      }
-
+      c.timer();
       c.move();
       c.display();
     }
   }
 }
 
-
 void mousePressed() {
 
-  
+
   myCircles.add(new Circle("client", color(0, 64)));
   println("alive");
   int myCirclesSize = myCircles.size();
   println("we have "+myCirclesSize);
   Circle targetC = (Circle) myCircles.get(myCirclesSize-1);
-  
+
   targetC.centerX = mouseX;
   targetC.centerY = mouseY;
 
   targetC.newStroke();
 
   targetC.active = true;
-  
+
   savedTime = millis();
 }
 
@@ -97,25 +88,24 @@ void keyPressed() {
 }
 
 void receive(String name, String tag, float x) {
-  println("### received: " + name + " - " + tag + " - " + x);
+//  println("### received: " + name + " - " + tag + " - " + x);
 }
 
 void receive(String name, String tag, float x, float y) {
-  println("### received: " + name + " - " + tag + " - " + x + ", " + y);
-  
-  for (int i = 0; i < myCircles.size(); i++) {
+//  println("### received: " + name + " - " + tag + " - " + x + ", " + y);
+
+  for (int i = 0; i < myCircles.size (); i++) {
     Circle c = (Circle) myCircles.get(i);
     if (name.equals("client") && tag.equals(c.name)) {
-      
+
       c.mouseXmoved = x;
       c.mouseYmoved = y;
     }
   }
 }
 
-
 void receive(String name, String tag, float x, float y, float z) {
-  println("### received: " + name + " - " + tag + " - " + x + ", " + y + ", " + z);
+//  println("### received: " + name + " - " + tag + " - " + x + ", " + y + ", " + z);
 }
 
 void keyReleased() {
