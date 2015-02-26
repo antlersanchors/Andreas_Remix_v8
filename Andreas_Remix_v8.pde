@@ -29,18 +29,13 @@ void setup() {
   frameRate(25);
   smooth();
 
-  //  myCircles[0] = new Circle("melina", color(0, 64)); 
-  //  myCircles[1] = new Circle("andreas", color(0, 64)); 
-  //  myCircles[2] = new Circle("sergey", color(0, 0, 255, 64)); 
-  //  myCircles[3] = new Circle("john", color(255, 0, 0, 64)); 
-
   myCircles = new ArrayList();
 
-  //  stroke(0, 50);
   background(255);
 
   mClient = new NetworkClient(this, "edc.local", "client");
 }
+
 void draw() {
 
   for (int i = 0; i < myCircles.size (); i++) {
@@ -56,8 +51,7 @@ void draw() {
 
 void mousePressed() {
 
-
-  myCircles.add(new Circle("client", color(0, 64)));
+  myCircles.add(new Circle("client", color(random(255))));
   println("alive");
   int myCirclesSize = myCircles.size();
   println("we have "+myCirclesSize);
