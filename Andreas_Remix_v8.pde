@@ -10,7 +10,11 @@ import netP5.*;
 
 NetworkClient mClient;
 float mBackgroundColor;
-Circle[] myCircles = new Circle[4];
+//Old array
+//Circle[] myCircles = new Circle[4];
+
+//Let's try an ArrayList
+ArrayList myCircles;
 
 boolean haveibeenclicked = false;
 
@@ -19,56 +23,49 @@ int totalTime = 10000;
 int passedTime;
 float strokeAlpha;
 int strokeHue;
+int masterStroke;
 
 void setup() {
   size(displayWidth, displayHeight);
   frameRate(25);
   smooth();
 
-  myCircles[0] = new Circle("melina", color(0, 64)); 
-  myCircles[1] = new Circle("andreas", color(0, 64)); 
-  myCircles[2] = new Circle("sergey", color(0, 0, 255, 64)); 
-  myCircles[3] = new Circle("john", color(255, 0, 0, 64)); 
+  myCircles = new ArrayList();
 
-  //  stroke(0, 50);
   background(255);
+  masterStroke = int(random(0,255));
 
   mClient = new NetworkClient(this, "edc.local", "client");
 }
+
 void draw() {
-// this is a change
-  for (int i = 0; i < myCircles.length; i++) {
-    if (myCircles[i].mouseXmoved != 0 && myCircles[i].active == true ) {
 
-      // Calculate how much time has passed
-      passedTime = millis() - savedTime;
-      // Has ten seconds passed?
-      if (passedTime > totalTime) {
-        println( " 10 seconds have passed! " );
-        myCircles[i].active = false;
-        savedTime = millis(); // Save the current time to restart the timer!
-      }
+  for (int i = 0; i < myCircles.size (); i++) {
+    Circle c = (Circle) myCircles.get(i);
+    if (c.active == true ) {
 
-      myCircles[i].move();
-      //    myCircles[i].move(myCircles[i].mouseXmoved, myCircles[i].mouseYmoved);
-
-      myCircles[i].display();
+      c.timer();
+      c.move();
+      c.display();
     }
   }
 }
 
-
 void mousePressed() {
-//  Circle myNewCircle = new Circle("melina", color(0, 64));
-//  myCircles = append(myCircles, myNewCircle);
-  
-  myCircles[2].centerX = mouseX;
-  myCircles[2].centerY = mouseY;
 
-  myCircles[2].newStroke();
+  myCircles.add(new Circle("client", color(random(255))));
+  println("alive");
+  int myCirclesSize = myCircles.size();
+  println("we have "+myCirclesSize);
+  Circle targetC = (Circle) myCircles.get(myCirclesSize-1);
 
-  myCircles[2].active = true;
-//  haveibeenclicked = true;
+  targetC.centerX = mouseX;
+  targetC.centerY = mouseY;
+
+  targetC.newStroke();
+
+  targetC.active = true;
+
   savedTime = millis();
 }
 
@@ -87,22 +84,24 @@ void keyPressed() {
 }
 
 void receive(String name, String tag, float x) {
-  println("### received: " + name + " - " + tag + " - " + x);
+//  println("### received: " + name + " - " + tag + " - " + x);
 }
 
 void receive(String name, String tag, float x, float y) {
-  println("### received: " + name + " - " + tag + " - " + x + ", " + y);
-  for (int i = 0; i < myCircles.length; i++) {
-    if (name.equals("client") && tag.equals(myCircles[i].name)) {
-      myCircles[i].mouseXmoved = x;
-      myCircles[i].mouseYmoved = y;
+//  println("### received: " + name + " - " + tag + " - " + x + ", " + y);
+
+  for (int i = 0; i < myCircles.size (); i++) {
+    Circle c = (Circle) myCircles.get(i);
+    if (name.equals("client") && tag.equals(c.name)) {
+
+      c.mouseXmoved = x;
+      c.mouseYmoved = y;
     }
   }
 }
 
-
 void receive(String name, String tag, float x, float y, float z) {
-  println("### received: " + name + " - " + tag + " - " + x + ", " + y + ", " + z);
+//  println("### received: " + name + " - " + tag + " - " + x + ", " + y + ", " + z);
 }
 
 void keyReleased() {

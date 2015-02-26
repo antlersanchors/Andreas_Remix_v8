@@ -22,7 +22,7 @@ class Circle {
 
   float mouseXmoved, mouseYmoved;
   String name;
-  
+
   int formResolution = 15;
   int stepSize = 8;
   float distortionFactor = 2;
@@ -34,13 +34,13 @@ class Circle {
 
   boolean filled = false;
   boolean freeze = false;
-  
+
   boolean active = false;
-  
+
   Circle(String pName, color pColor) {
     name=pName;
     color strokecolor = pColor;
-     
+
     // init form
     centerX = width/2; 
     centerY = height/2;
@@ -54,40 +54,48 @@ class Circle {
   //  void move(float towardsX, float towardsY) {
   void move() {
 
-    // myCircles[i].mouseXmoved, myCircles[i].mouseYmoved
-
     // calculate new points
     for (int i=0; i<formResolution; i++) {
       x[i] += random(-stepSize, stepSize);
       y[i] += random(-stepSize, stepSize);
-      
+
       // Descending movement
       centerY += i*0.01*noise(0, 0.3);
     }
   }
 
-void newStroke() {
-    strokeHue = ((abs(strokeHue)) + int(random(-60,60))); 
+  void timer() {
+    // Calculate how much time has passed
+    passedTime = millis() - savedTime;
+    
+    // Has ten seconds passed?
+    if (passedTime > totalTime) {
+      println( " 10 seconds have passed! " );
+      this.active = false;
+
+      savedTime = millis(); // Save the current time to restart the timer!
+    }
+  }
+  
+  void newStroke() {
+    strokeHue = abs((masterStroke + int(random(-60, 60)))); 
     println("Hue is now: " + strokeHue);
-}
+  }
 
   void display() {
-    
+
     strokeWeight(0.75);
     noFill();
 
-//    strokeHue = int(random(125, 180));
+    //    strokeHue = int(random(125, 180));
     int strokeBrightness = int(random(175, 245));
     int strokeSaturation = int(random(35, 235));
-    
+
     strokeAlpha = (map(passedTime, 0, 9900, 255, 0));
-    
+
     colorMode(HSB);
     color strokecolor = color(strokeHue, strokeBrightness, strokeSaturation, strokeAlpha);
-    
     stroke(strokecolor);
-    println(strokeAlpha);
-    println("color " + strokecolor);
 
     beginShape();
     // start controlpoint
