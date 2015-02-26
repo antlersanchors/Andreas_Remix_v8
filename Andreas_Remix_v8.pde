@@ -43,15 +43,16 @@ myCircles = new ArrayList();
 }
 void draw() {
 
-  for (int i = 0; i < myCircles.length; i++) {
-    if (myCircles[i].mouseXmoved != 0 && myCircles[i].active == true ) {
+  for (int i = 0; i < myCircles.size(); i++) {
+    Circle c = (Circle) myCircles.get(i);
+    if (c.mouseXmoved != 0 && c.active == true ) {
 
       // Calculate how much time has passed
       passedTime = millis() - savedTime;
       // Has ten seconds passed?
       if (passedTime > totalTime) {
         println( " 10 seconds have passed! " );
-        myCircles[i].active = false;
+        c.active = false;
         savedTime = millis(); // Save the current time to restart the timer!
       }
 
@@ -66,8 +67,9 @@ void mousePressed() {
 //  Circle myNewCircle = new Circle("melina", color(0, 64));
 //  myCircles = append(myCircles, myNewCircle);
   
-  myCircles[2].centerX = mouseX;
-  myCircles[2].centerY = mouseY;
+  myCircles.add(new Circle());
+  myCircles.this.centerX = mouseX;
+  myCircles.this.centerY = mouseY;
 
   myCircles[2].newStroke();
 
