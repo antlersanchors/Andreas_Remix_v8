@@ -36,10 +36,24 @@ class Circle {
   boolean freeze = false;
 
   boolean active = false;
+  
+  //MOVEMENT STUFF
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float topspeed;
 
-  Circle(String pName, color pColor) {
+  float distanceFromCenter;
+  int scaleFactor;
+
+  PVector canvasCenter = new PVector(width/2, height/2);
+
+  Circle(String pName, color pColor, PVector startLoc, PVector startDir) {
     name=pName;
     color strokecolor = pColor;
+    
+    location = startLoc;
+    velocity = startDir;
 
     // init form
     centerX = width/2; 
@@ -48,6 +62,19 @@ class Circle {
     for (int i=0; i<formResolution; i++) {
       x[i] = cos(angle*i) * initRadius;
       y[i] = sin(angle*i) * initRadius;
+    }
+  }
+
+  void timer() {
+    // Calculate how much time has passed
+    passedTime = millis() - savedTime;
+    
+    // Has ten seconds passed?
+    if (passedTime > totalTime) {
+      println( " 10 seconds have passed! " );
+      this.active = false;
+
+      savedTime = millis(); // Save the current time to restart the timer!
     }
   }
 
@@ -64,18 +91,7 @@ class Circle {
     }
   }
 
-  void timer() {
-    // Calculate how much time has passed
-    passedTime = millis() - savedTime;
-    
-    // Has ten seconds passed?
-    if (passedTime > totalTime) {
-      println( " 10 seconds have passed! " );
-      this.active = false;
 
-      savedTime = millis(); // Save the current time to restart the timer!
-    }
-  }
   
   void newStroke() {
     strokeHue = masterStroke;

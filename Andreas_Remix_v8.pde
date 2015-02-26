@@ -25,6 +25,12 @@ float strokeAlpha;
 
 int masterStroke;
 
+//MOVEMENT STUFF
+PVector mouse;
+PVector dir;
+PVector center;
+
+
 void setup() {
   size(displayWidth, displayHeight);
   frameRate(25);
@@ -52,11 +58,17 @@ void draw() {
 }
 
 void mousePressed() {
+  
+  PVector center = new PVector(width/2, height/2);
+  println("The Center of Everything is: " + center);
+  PVector mouse = new PVector(mouseX, mouseY);
+  PVector dir = PVector.sub(mouse, center);
+  println("Before normalize: dir = " + dir);
+  dir.normalize();
+  println("After normalize: dir = " + dir);
 
-  myCircles.add(new Circle("client", color(random(255))));
-  println("alive");
+  myCircles.add(new Circle("client", color(random(255)),mouse,dir));
   int myCirclesSize = myCircles.size();
-  println("we have "+myCirclesSize);
   Circle targetC = (Circle) myCircles.get(myCirclesSize-1);
 
   targetC.centerX = mouseX;
@@ -66,7 +78,6 @@ void mousePressed() {
 
   targetC.active = true;
 
-  savedTime = millis();
 }
 
 void mouseMoved() {
