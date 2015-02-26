@@ -23,6 +23,7 @@ int totalTime = 10000;
 int passedTime;
 float strokeAlpha;
 int strokeHue;
+int masterStroke;
 
 void setup() {
   size(displayWidth, displayHeight);
@@ -32,6 +33,7 @@ void setup() {
   myCircles = new ArrayList();
 
   background(255);
+  masterStroke = int(random(0,255));
 
   mClient = new NetworkClient(this, "edc.local", "client");
 }

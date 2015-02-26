@@ -54,8 +54,6 @@ class Circle {
   //  void move(float towardsX, float towardsY) {
   void move() {
 
-    // myCircles[i].mouseXmoved, myCircles[i].mouseYmoved
-
     // calculate new points
     for (int i=0; i<formResolution; i++) {
       x[i] += random(-stepSize, stepSize);
@@ -66,11 +64,6 @@ class Circle {
     }
   }
 
-  void newStroke() {
-    strokeHue = ((abs(strokeHue)) + int(random(-60, 60))); 
-    println("Hue is now: " + strokeHue);
-  }
-
   void timer() {
     // Calculate how much time has passed
     passedTime = millis() - savedTime;
@@ -79,9 +72,14 @@ class Circle {
     if (passedTime > totalTime) {
       println( " 10 seconds have passed! " );
       this.active = false;
-      println("What is this? " + this);
+
       savedTime = millis(); // Save the current time to restart the timer!
     }
+  }
+  
+  void newStroke() {
+    strokeHue = abs((masterStroke + int(random(-60, 60)))); 
+    println("Hue is now: " + strokeHue);
   }
 
   void display() {
@@ -97,10 +95,7 @@ class Circle {
 
     colorMode(HSB);
     color strokecolor = color(strokeHue, strokeBrightness, strokeSaturation, strokeAlpha);
-
     stroke(strokecolor);
-    println(strokeAlpha);
-    println("color " + strokecolor);
 
     beginShape();
     // start controlpoint
