@@ -22,7 +22,7 @@ int savedTime;
 int totalTime = 10000;
 int passedTime;
 float strokeAlpha;
-int strokeHue;
+
 int masterStroke;
 
 void setup() {

@@ -78,7 +78,8 @@ class Circle {
   }
   
   void newStroke() {
-    strokeHue = abs((masterStroke + int(random(-60, 60)))); 
+    strokeHue = masterStroke;
+    strokeHue = abs((masterStroke + int(random(-35,35)))); 
     println("Hue is now: " + strokeHue);
   }
 
