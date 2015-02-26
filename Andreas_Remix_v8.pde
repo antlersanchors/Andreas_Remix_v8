@@ -68,7 +68,7 @@ void mousePressed() {
 //  myCircles = append(myCircles, myNewCircle);
   
   
-  myCircles.add(new Circle("melina", color(0, 64)));
+  myCircles.add(new Circle("client", color(0, 64)));
   
   int myCirclesSize = myCircles.size();
   Circle targetC = (Circle) myCircles.get(myCirclesSize);
@@ -102,10 +102,13 @@ void receive(String name, String tag, float x) {
 
 void receive(String name, String tag, float x, float y) {
   println("### received: " + name + " - " + tag + " - " + x + ", " + y);
+  
   for (int i = 0; i < myCircles.size(); i++) {
-    if (name.equals("client") && tag.equals(myCircles[i].name)) {
-      myCircles[i].mouseXmoved = x;
-      myCircles[i].mouseYmoved = y;
+    Circle c = (Circle) myCircles.get(i);
+    if (name.equals("client") && tag.equals(c.name)) {
+      
+      c.mouseXmoved = x;
+      c.mouseYmoved = y;
     }
   }
 }
