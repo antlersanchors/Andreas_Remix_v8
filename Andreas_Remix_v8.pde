@@ -112,18 +112,18 @@ void receive(String name, String tag, float x) {
 void receive(String name, String tag, float x, float y) {
   println("### received: " + name + " - " + tag + " - " + x + ", " + y);
 
+  float dataX = x;
 // pushMatrix();
 //  translate(width/2,height/2);
 
-  
+  println("HEYYYYYY THIS IS XXXXXXX " + dataX);
   PVector center = new PVector(width/2, height/2);
   println("The Center of Everything is: " + center);
-  PVector mouse = new PVector(x, y);
+  PVector mouse = new PVector(dataX, y);
   PVector dir = PVector.sub(mouse, center);
   println("Before normalize: dir = " + dir);
   dir.normalize();
   println("After normalize: dir = " + dir);
-  
   
   myCircles.add(new Circle("client", color(random(255)),mouse,dir));
   int myCirclesSize = myCircles.size();
@@ -152,12 +152,25 @@ void receive(String name, String tag, float x, float y) {
 void receive(String name, String tag, float x, float y, float z) {
   println("### received: " + name + " - " + tag + " - " + x + ", " + y + ", " + z);
   
-  pushMatrix();
-  translate(width/2,height/2);
-  fill(235);
+  println("HEYYYYYY THIS IS XXXXXXX " + x);
+  PVector center = new PVector(width/2, height/2);
+  println("The Center of Everything is: " + center);
+  PVector mouse = new PVector(x, y);
+  PVector dir = PVector.sub(mouse, center);
+  println("Before normalize: dir = " + dir);
+  dir.normalize();
+  println("After normalize: dir = " + dir);
   
-  ellipse(x,y,5,5);
-  popMatrix();
+  myCircles.add(new Circle("client", color(random(255)),mouse,dir));
+  int myCirclesSize = myCircles.size();
+  Circle targetC = (Circle) myCircles.get(myCirclesSize-1);
+
+  targetC.centerX = x;
+  targetC.centerY = y;
+
+  targetC.newStroke();
+
+  targetC.active = true;
 }
 
 void keyReleased() {
