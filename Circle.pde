@@ -74,7 +74,7 @@ class Circle {
     
     // Has ten seconds passed?
     if (passedTime > totalTime) {
-      println( " 10 seconds have passed! " );
+//      println( " 10 seconds have passed! " );
       this.active = false;
 
       savedTime = millis(); // Save the current time to restart the timer!
@@ -106,7 +106,7 @@ class Circle {
   void newStroke() {
     strokeHue = masterStroke;
     strokeHue = abs((masterStroke + int(random(-35,35)))); 
-    println("Hue is now: " + strokeHue);
+//    println("Hue is now: " + strokeHue);
   }
 
   void display() {
