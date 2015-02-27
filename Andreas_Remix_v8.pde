@@ -30,6 +30,8 @@ PVector mouse;
 PVector dir;
 PVector center;
 
+float lastPosX;
+
 
 void setup() {
   
@@ -49,6 +51,7 @@ void draw() {
   //  fill(250,1);
   //  rect(0,0,width,height);
 
+//println("Coordinates are: " + "x: " + mouseX + "y: " + mouseY);
   for (int i = 0; i < myCircles.size (); i++) {
     Circle c = (Circle) myCircles.get(i);
     if (c.active == true ) {
@@ -104,13 +107,19 @@ void keyPressed() {
 
 void receive(String name, String tag, float x) {
 
-  pushMatrix();
-  translate(width/2,height/2);
+//  pushMatrix();
+//  translate(width/2,height/2);
   PVector center = new PVector(width/2, height/2);
 //  println("The Center of Everything is: " + center);
+  
+  float currentPosX = x;
+  float weWantPosX = (lastPosX - currentPosX)*1.16803*500;
+  lastPosX = currentPosX;
 
+  
+  
   float randomY = random(width);
-  PVector mouse = new PVector(x, randomY);
+  PVector mouse = new PVector(weWantPosX, randomY);
   PVector dir = PVector.sub(mouse, center);
 //  println("Before normalize: dir = " + dir);
   dir.normalize();
@@ -126,7 +135,7 @@ void receive(String name, String tag, float x) {
   targetC.newStroke();
 
   targetC.active = true;
-  popMatrix();
+//  popMatrix();
 
   println("### received: " + name + " - " + tag + " - " + x);
 }
@@ -134,8 +143,8 @@ void receive(String name, String tag, float x) {
 void receive(String name, String tag, float x, float y) {
   println("### received: " + name + " - " + tag + " - " + x + ", " + y);
 
-pushMatrix();
-translate(width/2,height/2);
+//pushMatrix();
+//translate(width/2,height/2);
   float totalX =+ x;
   float totalY =+ y;
   int counter = 0;
@@ -171,7 +180,7 @@ translate(width/2,height/2);
 
     targetC.active = true;
     
-    popMatrix();
+//    popMatrix();
 }
     //  for (int i = 0; i < myCircles.size (); i++) {
     //    Circle c = (Circle) myCircles.get(i);
@@ -209,7 +218,7 @@ void receive(String name, String tag, float x, float y, float z) {
     dir.normalize();
 //    println("After normalize: dir = " + dir);
 
-    myCircles.add(new Circle("cleaner", color(255), mouse, dir));
+    myCircles.add(new Circle("c", color(255), mouse, dir));
     int myCirclesSize = myCircles.size();
     Circle targetC = (Circle) myCircles.get(myCirclesSize-1);
 

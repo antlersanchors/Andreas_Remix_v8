@@ -59,8 +59,8 @@ class Circle {
     velocity = startDir;
 
     // init form
-    centerX = width/2; 
-    centerY = height/2;
+    centerX = location.x; 
+    centerY = location.y;
     float angle = radians(360/float(formResolution));
     for (int i=0; i<formResolution; i++) {
       x[i] = cos(angle*i) * initRadius;
