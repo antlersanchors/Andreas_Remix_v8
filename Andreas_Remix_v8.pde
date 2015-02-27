@@ -25,8 +25,14 @@ float strokeAlpha;
 
 int masterStroke;
 
+//MOVEMENT STUFF
+PVector mouse;
+PVector dir;
+PVector center;
+
+
 void setup() {
-  size(displayWidth, displayHeight);
+  size(displayWidth, displayHeight, P3D);
   frameRate(25);
   smooth();
 
@@ -39,7 +45,8 @@ void setup() {
 }
 
 void draw() {
-
+  fill(250,1);
+rect(0,0,width,height);
   for (int i = 0; i < myCircles.size (); i++) {
     Circle c = (Circle) myCircles.get(i);
     if (c.active == true ) {
@@ -49,14 +56,26 @@ void draw() {
       c.display();
     }
   }
+  
+float fov = PI/3.0; 
+    float cameraZ = (height/2.0) / tan(fov/2.0); 
+    perspective(fov, float(width)/float(height), cameraZ/2.0, cameraZ*2.0);
+    
+    cameraZ++;
 }
 
 void mousePressed() {
+  
+  PVector center = new PVector(width/2, height/2);
+  println("The Center of Everything is: " + center);
+  PVector mouse = new PVector(mouseX, mouseY);
+  PVector dir = PVector.sub(mouse, center);
+  println("Before normalize: dir = " + dir);
+  dir.normalize();
+  println("After normalize: dir = " + dir);
 
-  myCircles.add(new Circle("client", color(random(255))));
-  println("alive");
+  myCircles.add(new Circle("client", color(random(255)),mouse,dir));
   int myCirclesSize = myCircles.size();
-  println("we have "+myCirclesSize);
   Circle targetC = (Circle) myCircles.get(myCirclesSize-1);
 
   targetC.centerX = mouseX;
@@ -66,7 +85,6 @@ void mousePressed() {
 
   targetC.active = true;
 
-  savedTime = millis();
 }
 
 void mouseMoved() {
