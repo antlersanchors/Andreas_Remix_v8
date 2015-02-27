@@ -36,10 +36,27 @@ class Circle {
   boolean freeze = false;
 
   boolean active = false;
+  
+  //MOVEMENT STUFF
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float topspeed;
+  float velScale = 0.15;
 
-  Circle(String pName, color pColor) {
+  float distanceFromCenter;
+  int scaleFactor;
+  
+  
+
+  PVector canvasCenter = new PVector(width/2, height/2);
+
+  Circle(String pName, color pColor, PVector startLoc, PVector startDir) {
     name=pName;
     color strokecolor = pColor;
+    
+    location = startLoc;
+    velocity = startDir;
 
     // init form
     centerX = width/2; 
@@ -51,36 +68,45 @@ class Circle {
     }
   }
 
-  //  void move(float towardsX, float towardsY) {
-  void move() {
-
-    // calculate new points
-    for (int i=0; i<formResolution; i++) {
-      x[i] += random(-stepSize, stepSize);
-      y[i] += random(-stepSize, stepSize);
-
-      // Descending movement
-      centerY += i*0.01*noise(0, 0.3);
-    }
-  }
-
   void timer() {
     // Calculate how much time has passed
     passedTime = millis() - savedTime;
     
     // Has ten seconds passed?
     if (passedTime > totalTime) {
-      println( " 10 seconds have passed! " );
+//      println( " 10 seconds have passed! " );
       this.active = false;
 
       savedTime = millis(); // Save the current time to restart the timer!
     }
   }
+
+  //  void move(float towardsX, float towardsY) {
+  void move() {
+
+    //Don't think we need this
+    //location.add(velocity);
+
+    // calculate new points
+    for (int i=0; i<formResolution; i++) {
+      x[i] += random(-stepSize, stepSize);
+      y[i] += random(-stepSize, stepSize);
+      
+      //Apply velocity
+      centerX += (velScale * velocity.x);
+      centerY += (velScale * velocity.y);
+      
+      // Descending movement randomizer
+      centerY += i*0.01*noise(0, 0.3);
+    }
+  }
+
+
   
   void newStroke() {
     strokeHue = masterStroke;
     strokeHue = abs((masterStroke + int(random(-35,35)))); 
-    println("Hue is now: " + strokeHue);
+//    println("Hue is now: " + strokeHue);
   }
 
   void display() {
@@ -96,8 +122,11 @@ class Circle {
 
     colorMode(HSB);
     color strokecolor = color(strokeHue, strokeBrightness, strokeSaturation, strokeAlpha);
+    if (name == "cleaner") {
+      stroke(255);
+    } else {
     stroke(strokecolor);
-
+    }
     beginShape();
     // start controlpoint
     curveVertex(x[formResolution-1]+centerX, y[formResolution-1]+centerY);
