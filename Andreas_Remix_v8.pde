@@ -112,12 +112,32 @@ void receive(String name, String tag, float x) {
 void receive(String name, String tag, float x, float y) {
   println("### received: " + name + " - " + tag + " - " + x + ", " + y);
 
- pushMatrix();
-  translate(width/2,height/2);
-  fill(10,10,235);
+// pushMatrix();
+//  translate(width/2,height/2);
+
   
-  ellipse(x,y,5,5);
-  popMatrix();
+  PVector center = new PVector(width/2, height/2);
+  println("The Center of Everything is: " + center);
+  PVector mouse = new PVector(x, y);
+  PVector dir = PVector.sub(mouse, center);
+  println("Before normalize: dir = " + dir);
+  dir.normalize();
+  println("After normalize: dir = " + dir);
+  
+  
+  myCircles.add(new Circle("client", color(random(255)),mouse,dir));
+  int myCirclesSize = myCircles.size();
+  Circle targetC = (Circle) myCircles.get(myCirclesSize-1);
+
+  targetC.centerX = x;
+  targetC.centerY = y;
+
+  targetC.newStroke();
+
+  targetC.active = true;
+
+
+//  popMatrix();
 
   for (int i = 0; i < myCircles.size (); i++) {
     Circle c = (Circle) myCircles.get(i);
