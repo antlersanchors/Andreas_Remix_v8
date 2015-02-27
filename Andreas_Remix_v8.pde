@@ -16,7 +16,12 @@ float mBackgroundColor;
 //Let's try an ArrayList
 ArrayList myCircles;
 
+boolean haveibeenclicked = false;
 
+int savedTime;
+int totalTime = 10000;
+int passedTime;
+float strokeAlpha;
 
 int masterStroke;
 
@@ -34,7 +39,7 @@ void setup() {
   frameRate(25);
   smooth();
 
-  myCircles = new ArrayList();
+  myCircles = new ArrayList(15);
 
   background(255);
   masterStroke = int(random(0, 255));
