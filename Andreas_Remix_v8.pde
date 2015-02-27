@@ -39,7 +39,7 @@ void setup() {
   frameRate(25);
   smooth();
 
-  myCircles = new ArrayList();
+  myCircles = new ArrayList(15);
 
   background(255);
   masterStroke = int(random(0, 255));
@@ -113,11 +113,9 @@ void receive(String name, String tag, float x) {
 //  println("The Center of Everything is: " + center);
   
   float currentPosX = x;
-  float weWantPosX = (lastPosX - currentPosX)*1.16803*500;
+  float weWantPosX = (lastPosX + currentPosX)*1.16803*1000;
   lastPosX = currentPosX;
 
-  
-  
   float randomY = random(width);
   PVector mouse = new PVector(weWantPosX, randomY);
   PVector dir = PVector.sub(mouse, center);
@@ -149,15 +147,14 @@ void receive(String name, String tag, float x, float y) {
   float totalY =+ y;
   int counter = 0;
 
-  float avgX = totalX/10;
-  float  avgY = totalY/10;
+  float avgX = totalX*100;
+  float  avgY = totalY*100;
 
-  if (counter == 9) {
+  if (counter == 20) {
 
     counter = 0;
     totalX = 0;
     totalY = 0;
-
 
     counter++;
 
