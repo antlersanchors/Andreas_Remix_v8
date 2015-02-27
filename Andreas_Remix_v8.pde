@@ -31,6 +31,7 @@ PVector dir;
 PVector center;
 
 float lastPosX;
+int counterThing;
 
 
 void setup() {
@@ -61,6 +62,14 @@ void draw() {
       c.display();
     }
   }
+ 
+  if ( counterThing == 700) {
+    fill(255);
+    rect(0,0,width,height);
+    counterThing = 0;
+  }
+  counterThing++;
+ 
 }
 
 void mousePressed() {
@@ -215,7 +224,7 @@ void receive(String name, String tag, float x, float y, float z) {
     dir.normalize();
 //    println("After normalize: dir = " + dir);
 
-    myCircles.add(new Circle("c", color(255), mouse, dir));
+    myCircles.add(new Circle("cleaner", color(255), mouse, dir));
     int myCirclesSize = myCircles.size();
     Circle targetC = (Circle) myCircles.get(myCirclesSize-1);
 
