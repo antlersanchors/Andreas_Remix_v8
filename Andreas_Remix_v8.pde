@@ -32,7 +32,7 @@ PVector center;
 
 
 void setup() {
-  size(displayWidth, displayHeight, P3D);
+  size(displayWidth, displayHeight);
   frameRate(25);
   smooth();
 
@@ -45,8 +45,9 @@ void setup() {
 }
 
 void draw() {
-  fill(250,1);
-rect(0,0,width,height);
+//  fill(250,1);
+//  rect(0,0,width,height);
+  
   for (int i = 0; i < myCircles.size (); i++) {
     Circle c = (Circle) myCircles.get(i);
     if (c.active == true ) {
@@ -57,11 +58,7 @@ rect(0,0,width,height);
     }
   }
   
-float fov = PI/3.0; 
-    float cameraZ = (height/2.0) / tan(fov/2.0); 
-    perspective(fov, float(width)/float(height), cameraZ/2.0, cameraZ*2.0);
-    
-    cameraZ++;
+
 }
 
 void mousePressed() {
@@ -88,7 +85,7 @@ void mousePressed() {
 }
 
 void mouseMoved() {
-  mClient.send("sergey", mouseX, mouseY);
+  mClient.send("chelichael", mouseX, mouseY);
 }
 
 //*** NETWORK STUFF ***
@@ -102,11 +99,25 @@ void keyPressed() {
 }
 
 void receive(String name, String tag, float x) {
-//  println("### received: " + name + " - " + tag + " - " + x);
+  
+  translate(width/2,height/2);
+  fill(235,10,10);
+  
+  ellipse(x,x*(random(30)),5,5);
+  popMatrix();
+  
+  println("### received: " + name + " - " + tag + " - " + x);
 }
 
 void receive(String name, String tag, float x, float y) {
-//  println("### received: " + name + " - " + tag + " - " + x + ", " + y);
+  println("### received: " + name + " - " + tag + " - " + x + ", " + y);
+
+ pushMatrix();
+  translate(width/2,height/2);
+  fill(10,10,235);
+  
+  ellipse(x,y,5,5);
+  popMatrix();
 
   for (int i = 0; i < myCircles.size (); i++) {
     Circle c = (Circle) myCircles.get(i);
@@ -119,7 +130,14 @@ void receive(String name, String tag, float x, float y) {
 }
 
 void receive(String name, String tag, float x, float y, float z) {
-//  println("### received: " + name + " - " + tag + " - " + x + ", " + y + ", " + z);
+  println("### received: " + name + " - " + tag + " - " + x + ", " + y + ", " + z);
+  
+  pushMatrix();
+  translate(width/2,height/2);
+  fill(235);
+  
+  ellipse(x,y,5,5);
+  popMatrix();
 }
 
 void keyReleased() {
