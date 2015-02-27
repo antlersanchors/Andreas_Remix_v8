@@ -40,7 +40,7 @@ void setup() {
   frameRate(25);
   smooth();
 
-  myCircles = new ArrayList(15);
+  myCircles = new ArrayList();
 
   background(255);
   masterStroke = int(random(0, 255));
@@ -60,16 +60,21 @@ void draw() {
       c.timer();
       c.move();
       c.display();
+      
+   }  
     }
-  }
- 
-  if ( counterThing == 700) {
+   if ( counterThing == 130000) {
     fill(255);
     rect(0,0,width,height);
     counterThing = 0;
+    masterStroke = int(random(0, 255));
   }
   counterThing++;
  
+
+      
+ 
+  
 }
 
 void mousePressed() {
@@ -198,44 +203,44 @@ void receive(String name, String tag, float x, float y) {
     //  }
   
 }
-void receive(String name, String tag, float x, float y, float z) {
-  println("### received: " + name + " - " + tag + " - " + x + ", " + y + ", " + z);
-
-  float totalX =+ x;
-  float totalY =+ y;
-  int counter = 0;
-
-  float avgX = totalX/10;
-  float  avgY = totalY/10;
-
-  if (counter == 9) {
-
-    counter = 0;
-    totalX = 0;
-    totalY = 0;
-
-    counter++;
-
-    PVector center = new PVector(width/2, height/2);
-//    println("The Center of Everything is: " + center);
-    PVector mouse = new PVector(avgX, avgY);
-    PVector dir = PVector.sub(mouse, center);
-//    println("Before normalize: dir = " + dir);
-    dir.normalize();
-//    println("After normalize: dir = " + dir);
-
-    myCircles.add(new Circle("cleaner", color(255), mouse, dir));
-    int myCirclesSize = myCircles.size();
-    Circle targetC = (Circle) myCircles.get(myCirclesSize-1);
-
-    targetC.centerX = x;
-    targetC.centerY = y;
-
-    targetC.newStroke();
-
-    targetC.active = true;
-  }
-}
+//void receive(String name, String tag, float x, float y, float z) {
+//  println("### received: " + name + " - " + tag + " - " + x + ", " + y + ", " + z);
+//
+//  float totalX =+ x;
+//  float totalY =+ y;
+//  int counter = 0;
+//
+//  float avgX = totalX/10;
+//  float  avgY = totalY/10;
+//
+//  if (counter == 9) {
+//
+//    counter = 0;
+//    totalX = 0;
+//    totalY = 0;
+//
+//    counter++;
+//
+//    PVector center = new PVector(width/2, height/2);
+////    println("The Center of Everything is: " + center);
+//    PVector mouse = new PVector(avgX, avgY);
+//    PVector dir = PVector.sub(mouse, center);
+////    println("Before normalize: dir = " + dir);
+//    dir.normalize();
+////    println("After normalize: dir = " + dir);
+//
+//    myCircles.add(new Circle("cleaner", color(255), mouse, dir));
+//    int myCirclesSize = myCircles.size();
+//    Circle targetC = (Circle) myCircles.get(myCirclesSize-1);
+//
+//    targetC.centerX = x;
+//    targetC.centerY = y;
+//
+//    targetC.newStroke();
+//
+//    targetC.active = true;
+//  }
+//}
 
 void keyReleased() {
   if (key == DELETE || key == BACKSPACE) background(255);
