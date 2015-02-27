@@ -86,8 +86,14 @@ void mouseMoved() {
   mClient.send("chelichael", mouseX, mouseY);
 }
 
+
 //*** NETWORK STUFF ***
 void keyPressed() {
+   if (key == 'c') {
+    fill(255);
+    rect(0,0,width,height);
+  }
+  
   if (key == ',') {
     mClient.disconnect();
   }
