@@ -35,8 +35,14 @@ class Circle {
   boolean filled = false;
   boolean freeze = false;
 
+  int savedTime;
+  int totalTime = 10000;
+  int passedTime;
+  
   boolean active = false;
   
+  float strokeAlpha;
+
   //MOVEMENT STUFF
   PVector location;
   PVector velocity;
@@ -46,15 +52,15 @@ class Circle {
 
   float distanceFromCenter;
   int scaleFactor;
-  
-  
+
+
 
   PVector canvasCenter = new PVector(width/2, height/2);
 
   Circle(String pName, color pColor, PVector startLoc, PVector startDir) {
     name=pName;
     color strokecolor = pColor;
-    
+
     location = startLoc;
     velocity = startDir;
 
@@ -71,10 +77,10 @@ class Circle {
   void timer() {
     // Calculate how much time has passed
     passedTime = millis() - savedTime;
-    
+
     // Has ten seconds passed?
     if (passedTime > totalTime) {
-//      println( " 10 seconds have passed! " );
+      //      println( " 10 seconds have passed! " );
       this.active = false;
 
       savedTime = millis(); // Save the current time to restart the timer!
@@ -91,22 +97,22 @@ class Circle {
     for (int i=0; i<formResolution; i++) {
       x[i] += random(-stepSize, stepSize);
       y[i] += random(-stepSize, stepSize);
-      
+
       //Apply velocity
       centerX += (velScale * velocity.x);
       centerY += (velScale * velocity.y);
-      
+
       // Descending movement randomizer
       centerY += i*0.01*noise(0, 0.3);
     }
   }
 
 
-  
+
   void newStroke() {
     strokeHue = masterStroke;
-    strokeHue = abs((masterStroke + int(random(-35,35)))); 
-//    println("Hue is now: " + strokeHue);
+    strokeHue = abs((masterStroke + int(random(-35, 35)))); 
+    //    println("Hue is now: " + strokeHue);
   }
 
   void display() {
@@ -125,7 +131,7 @@ class Circle {
     if (name == "cleaner") {
       stroke(255);
     } else {
-    stroke(strokecolor);
+      stroke(strokecolor);
     }
     beginShape();
     // start controlpoint
