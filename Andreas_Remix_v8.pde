@@ -40,7 +40,7 @@ void setup() {
   frameRate(25);
   smooth();
 
-  myCircles = new ArrayList();
+  myCircles = new ArrayList(15);
 
   background(255);
   masterStroke = int(random(0, 255));
@@ -53,7 +53,7 @@ void draw() {
   //  rect(0,0,width,height);
 
 //println("Coordinates are: " + "x: " + mouseX + "y: " + mouseY);
-  for (int i = 0; i < myCircles.size (); i++) {
+  for (int i = 0; i < myCircles.size(); i++) {
     Circle c = (Circle) myCircles.get(i);
     if (c.active == true ) {
 
@@ -63,17 +63,13 @@ void draw() {
       
    }  
     }
-   if ( counterThing == 130000) {
+   if ( counterThing == 3000) {
     fill(255);
     rect(0,0,width,height);
     counterThing = 0;
     masterStroke = int(random(0, 255));
   }
   counterThing++;
- 
-
-      
- 
   
 }
 
