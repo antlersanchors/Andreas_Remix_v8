@@ -122,8 +122,11 @@ class Circle {
 
     colorMode(HSB);
     color strokecolor = color(strokeHue, strokeBrightness, strokeSaturation, strokeAlpha);
+    if (name == "cleaner") {
+      stroke(255);
+    } else {
     stroke(strokecolor);
-
+    }
     beginShape();
     // start controlpoint
     curveVertex(x[formResolution-1]+centerX, y[formResolution-1]+centerY);
